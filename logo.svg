@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 124" width="300" height="124" role="img" aria-label="rajat">
+  <g fill="none" stroke="#000" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <!-- r -->
+    <path d="M22 38V90M22 64C22 46 36 38 54 42"/>
+    <!-- a -->
+    <circle cx="96" cy="64" r="22"/>
+    <path d="M118 40V90"/>
+    <!-- j -->
+    <path d="M158 40V96C158 108 148 114 136 110"/>
+    <!-- a -->
+    <circle cx="206" cy="64" r="22"/>
+    <path d="M228 40V90"/>
+    <!-- t -->
+    <path d="M264 20V76C264 87 272 93 286 89M246 42H284"/>
+  </g>
+  <circle cx="158" cy="15" r="9" fill="#000"/>
+</svg>
