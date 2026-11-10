@@ -589,6 +589,35 @@
     toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2200);
   }
 
+  /* ---------- light / dark theme ---------- */
+  const themeBtn = $("themeToggle");
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  const sysDark = matchMedia("(prefers-color-scheme: dark)");
+  const savedTheme = () => { try { return localStorage.getItem("theme"); } catch (_) { return null; } };
+
+  function setTheme(t) {
+    root.dataset.theme = t;
+    themeBtn.setAttribute("aria-label", t === "dark" ? "Switch to light theme" : "Switch to dark theme");
+    themeBtn.setAttribute("aria-pressed", t === "dark" ? "true" : "false");
+    themeMeta.setAttribute("content", t === "dark" ? "#12131a" : "#ffffff");
+  }
+  setTheme(root.dataset.theme === "dark" ? "dark" : "light");
+
+  themeBtn.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    try { localStorage.setItem("theme", next); } catch (_) { /* private mode */ }
+    if (!document.startViewTransition || reduce()) { setTheme(next); return; }
+    // grow the new theme out of the button in a circle
+    const r = themeBtn.getBoundingClientRect();
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    root.style.setProperty("--tx", x + "px");
+    root.style.setProperty("--ty", y + "px");
+    root.style.setProperty("--tr", Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + "px");
+    document.startViewTransition(() => setTheme(next));
+  });
+  // follow the system setting until the visitor picks one
+  sysDark.addEventListener("change", (e) => { if (!savedTheme()) setTheme(e.matches ? "dark" : "light"); });
+
   /* ---------- global ---------- */
   // pages sit below the nav, so track its height
   new ResizeObserver(() => root.style.setProperty("--navh", header.offsetHeight + "px")).observe(header);

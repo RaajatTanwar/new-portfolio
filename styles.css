@@ -5,15 +5,59 @@
   --f-display: "Clash Display", "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
   --f-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
   --f-body: "Cabinet Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+
+  /* ---------- 01 / theme tokens: light ---------- */
+  --bg: #ffffff; --bg2: #eceef5;            /* hero background */
+  --pg1: #ffffff; --pg2: #eef0f6;           /* page background */
+  --em: #000; --body: #2a2d3a; --faint: #a3a8b8; --on-ink: #fff;
+  --surface: #fff; --card: rgba(255, 255, 255, .78); --glass: rgba(255, 255, 255, .72); --field: #f7f8fb;
+  --line: rgba(11, 12, 16, .08); --line2: rgba(11, 12, 16, .12); --line3: rgba(11, 12, 16, .4);
+  --hover: rgba(11, 12, 16, .06); --hover2: rgba(11, 12, 16, .09);
+  --shadow: rgba(11, 12, 16, .10); --nav-bg: rgba(255, 255, 255, .82); --bgword: rgba(11, 12, 16, .06);
+  --panel: #121219; --panel-line: transparent; --flow-side: #d9dce6;
+  --kbd: #f1f3f8; --kbd-side: #c4c9d6;
+  --err: #d42c2c; --err-bg: #fff1f1; --err-ink: #a51f1f; --bad-bg: #fff6f6;
 }
+/* ---------- 01 / theme tokens: dark ---------- */
+html[data-theme="dark"] {
+  --ink: #f2f3f7; --mute: #9aa0b4;
+  --bg: #12131a; --bg2: #07080b;
+  --pg1: #14151d; --pg2: #0a0b10;
+  --em: #fff; --body: #c9ccd8; --faint: #5f6478; --on-ink: #0b0c10;
+  --surface: #181922; --card: rgba(28, 29, 40, .72); --glass: rgba(24, 25, 35, .72); --field: #101118;
+  --line: rgba(255, 255, 255, .08); --line2: rgba(255, 255, 255, .14); --line3: rgba(255, 255, 255, .45);
+  --hover: rgba(255, 255, 255, .07); --hover2: rgba(255, 255, 255, .11);
+  --shadow: rgba(0, 0, 0, .45); --nav-bg: rgba(12, 13, 18, .8); --bgword: rgba(255, 255, 255, .045);
+  --panel: #1d1e2a; --panel-line: rgba(255, 255, 255, .08); --flow-side: #2b2c3a;
+  --kbd: #2a2b38; --kbd-side: #07080b;
+  --err: #ff7b7b; --err-bg: rgba(255, 70, 70, .12); --err-ink: #ff9a9a; --bad-bg: rgba(255, 70, 70, .07);
+}
+/* in the dark, the primary (black) keycap turns light and the white one turns dark */
+html[data-theme="dark"] .keycap { --face: #f1f3f8; --side: #8d94a8; --text: #0b0c10; }
+html[data-theme="dark"] .keycap.white { --face: #2a2b38; --side: #050608; --text: #fff; }
+html[data-theme="dark"] .send .spin { border-color: rgba(11, 12, 16, .25); border-top-color: #0b0c10; }
+html[data-theme="dark"] .logo img { filter: invert(1); mix-blend-mode: normal; }
+
+/* the theme switch: a square keycap with a sun and a moon */
+.theme-key { width: 54px; padding: 0; overflow: hidden; }
+.theme-key svg { position: absolute; width: 22px; height: 22px; transition: transform .5s cubic-bezier(.34, 1.56, .64, 1), opacity .3s ease; }
+.theme-key .moon { transform: translateY(40px) rotate(-90deg); opacity: 0; }
+html[data-theme="dark"] .theme-key .sun { transform: translateY(-40px) rotate(90deg); opacity: 0; }
+html[data-theme="dark"] .theme-key .moon { transform: none; opacity: 1; }
+
+/* circular reveal when switching theme (browsers with view transitions) */
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+::view-transition-new(root) { animation: reveal .6s cubic-bezier(.4, 0, .2, 1); }
+@keyframes reveal { from { clip-path: circle(0 at var(--tx, 100%) var(--ty, 0)); } to { clip-path: circle(var(--tr, 150vmax) at var(--tx, 100%) var(--ty, 0)); } }
 * { box-sizing: border-box; }
-html { background: #fff; }
+html { background: var(--bg); color-scheme: light; }
+html[data-theme="dark"] { color-scheme: dark; }
 body {
   margin: 0;
   min-height: 100svh;
   color: var(--ink);
   font-family: var(--f-body);
-  background: radial-gradient(ellipse 90% 80% at 50% 42%, #ffffff 52%, #eceef5 100%);
+  background: radial-gradient(ellipse 90% 80% at 50% 42%, var(--bg) 52%, var(--bg2) 100%);
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
@@ -34,9 +78,9 @@ button { font-family: inherit; }
   font-weight: 800; font-size: 15px; color: var(--ink);
   transition: background .15s ease;
 }
-.links a:hover { background: rgba(11, 12, 16, .06); }
-.links a[aria-current="page"] { background: rgba(11, 12, 16, .09); }
-.nav .keycap { justify-self: end; }
+.links a:hover { background: var(--hover); }
+.links a[aria-current="page"] { background: var(--hover2); }
+.nav-end { justify-self: end; display: flex; align-items: center; gap: 12px; }
 
 /* ---------- 06 / keycap buttons ---------- */
 .keycap {
@@ -73,7 +117,7 @@ h1 {
   font-family: var(--f-display); font-weight: 600;
   font-size: clamp(38px, 4.4vw, 72px); line-height: 1.04; letter-spacing: -.02em;
 }
-h1 em { font-family: var(--f-serif); font-style: italic; font-weight: 400; color: #000; letter-spacing: -.01em; }
+h1 em { font-family: var(--f-serif); font-style: italic; font-weight: 400; color: var(--em); letter-spacing: -.01em; }
 
 .grid {
   display: grid; align-items: end; gap: 16px;
@@ -82,10 +126,10 @@ h1 em { font-family: var(--f-serif); font-style: italic; font-weight: 400; color
 }
 .card {
   align-self: end; padding: 20px 22px 22px; min-height: 210px;
-  border-radius: 24px; background: rgba(255, 255, 255, .72);
+  border-radius: 24px; background: var(--glass);
   -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-  border: 1px solid rgba(11, 12, 16, .06);
-  box-shadow: 0 14px 44px rgba(11, 12, 16, .10);
+  border: 1px solid var(--line);
+  box-shadow: 0 14px 44px var(--shadow);
 }
 .mini {
   --k: #17171f; --kt: #fff;
@@ -102,18 +146,18 @@ h1 em { font-family: var(--f-serif); font-style: italic; font-weight: 400; color
 .links-row { margin: 12px 0 0; display: flex; flex-wrap: wrap; gap: 8px 14px; }
 .links-row:empty { display: none; }
 .links-row a { font-weight: 800; font-size: 13px; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
-.links-row a.go { text-decoration: none; padding: 6px 12px; margin: -2px 0; border-radius: 999px; background: var(--ink); color: #fff; transition: transform .15s ease; }
+.links-row a.go { text-decoration: none; padding: 6px 12px; margin: -2px 0; border-radius: 999px; background: var(--ink); color: var(--on-ink); transition: transform .15s ease; }
 .links-row a.go:hover { transform: translateX(3px); }
 
 .actions { align-self: end; display: flex; flex-direction: column; gap: 22px; align-items: flex-start; }
 .btns { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
 .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; max-width: 330px; }
 .chips button {
-  appearance: none; cursor: pointer; border: 1px solid rgba(11, 12, 16, .12); background: rgba(255, 255, 255, .75);
+  appearance: none; cursor: pointer; border: 1px solid var(--line2); background: var(--card);
   padding: 8px 13px; border-radius: 999px; font-weight: 800; font-size: 13px; color: var(--ink);
   transition: background .15s ease, border-color .15s ease, transform .15s ease;
 }
-.chips button:hover { background: #fff; border-color: rgba(11, 12, 16, .4); transform: translateY(-1px); }
+.chips button:hover { background: var(--surface); border-color: var(--line3); transform: translateY(-1px); }
 .resume { font-weight: 800; font-size: 13px; color: var(--mute); text-decoration: underline; text-underline-offset: 3px; }
 .resume:hover { color: var(--ink); }
 
@@ -123,7 +167,7 @@ h1 em { font-family: var(--f-serif); font-style: italic; font-weight: 400; color
   position: absolute; left: 50%; top: 38%; transform: translate(-50%, -50%);
   z-index: -1; pointer-events: none; user-select: none; white-space: nowrap;
   font-family: var(--f-display); font-weight: 700; line-height: .8; letter-spacing: -.04em;
-  font-size: clamp(80px, 15.4vw, 290px); color: rgba(11, 12, 16, .06);
+  font-size: clamp(80px, 15.4vw, 290px); color: var(--bgword);
 }
 
 /* ---------- 05 / the key ball ---------- */
@@ -203,7 +247,9 @@ h1 em { font-family: var(--f-serif); font-style: italic; font-weight: 400; color
   .logo img { width: 92px; }
   .links { grid-column: 1 / -1; grid-row: 2; justify-content: center; }
   .links a { padding: 8px 10px; font-size: 14px; }
-  .nav .keycap { grid-column: 2; grid-row: 1; height: 48px; padding: 0 22px; }
+  .nav-end { grid-column: 2; grid-row: 1; gap: 10px; }
+  .nav .keycap { height: 48px; padding: 0 22px; }
+  .nav .theme-key { width: 48px; padding: 0; }
   .ball-wrap { height: min(52svh, 420px); min-height: 330px; }
   .bgword { top: -4%; font-size: 17.5vw; transform: translate(-50%, 0); }
 }

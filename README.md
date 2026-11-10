@@ -29,6 +29,10 @@ Get a free access key at https://web3forms.com (enter your email; the key arrive
 
 Send yourself a test message after deploying.
 
+## Light / dark theme
+The sun/moon key in the nav switches themes. The site follows the visitor's system setting until they pick one, then remembers it.
+All theme colours are CSS variables at the top of `styles.css` (`:root` for light, `html[data-theme="dark"]` for dark).
+
 ## Files
 - `index.html`   markup (nav, hero, page container)
 - `data.js`      **all content**: contact details, ball keys, projects, experience, skill groups
