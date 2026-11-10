@@ -29,14 +29,13 @@ button { font-family: inherit; }
 .logo { display: inline-block; line-height: 0; justify-self: start; }
 .logo img { width: 112px; height: auto; display: block; mix-blend-mode: multiply; }
 .links { display: flex; gap: 4px; }
-.links button {
-  appearance: none; background: none; border: 0; cursor: pointer;
-  padding: 10px 16px; border-radius: 12px;
+.links a {
+  padding: 10px 16px; border-radius: 12px; text-decoration: none;
   font-weight: 800; font-size: 15px; color: var(--ink);
   transition: background .15s ease;
 }
-.links button:hover { background: rgba(11, 12, 16, .06); }
-.links button[aria-current="true"] { background: rgba(11, 12, 16, .08); }
+.links a:hover { background: rgba(11, 12, 16, .06); }
+.links a[aria-current="page"] { background: rgba(11, 12, 16, .09); }
 .nav .keycap { justify-self: end; }
 
 /* ---------- 06 / keycap buttons ---------- */
@@ -103,6 +102,8 @@ h1 em { font-family: var(--f-serif); font-style: italic; font-weight: 400; color
 .links-row { margin: 12px 0 0; display: flex; flex-wrap: wrap; gap: 8px 14px; }
 .links-row:empty { display: none; }
 .links-row a { font-weight: 800; font-size: 13px; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.links-row a.go { text-decoration: none; padding: 6px 12px; margin: -2px 0; border-radius: 999px; background: var(--ink); color: #fff; transition: transform .15s ease; }
+.links-row a.go:hover { transform: translateX(3px); }
 
 .actions { align-self: end; display: flex; flex-direction: column; gap: 22px; align-items: flex-start; }
 .btns { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
@@ -138,6 +139,7 @@ h1 em { font-family: var(--f-serif); font-style: italic; font-weight: 400; color
 .cap { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .35s cubic-bezier(.34, 1.56, .64, 1); pointer-events: none; }
 .cap * { pointer-events: none; }
 .key.hot .cap { transform: translateZ(calc(var(--ks) * .38)) scale(1.06); }
+.key.press .cap { transform: translateZ(calc(var(--ks) * .12)) scale(.97); transition-duration: .12s; }
 
 .top {
   position: absolute; inset: 0; border-radius: 16%;
@@ -200,7 +202,7 @@ h1 em { font-family: var(--f-serif); font-style: italic; font-weight: 400; color
   .nav { grid-template-columns: 1fr auto; row-gap: 4px; padding-top: 12px; }
   .logo img { width: 92px; }
   .links { grid-column: 1 / -1; grid-row: 2; justify-content: center; }
-  .links button { padding: 9px 12px; }
+  .links a { padding: 8px 10px; font-size: 14px; }
   .nav .keycap { grid-column: 2; grid-row: 1; height: 48px; padding: 0 22px; }
   .ball-wrap { height: min(52svh, 420px); min-height: 330px; }
   .bgword { top: -4%; font-size: 17.5vw; transform: translate(-50%, 0); }

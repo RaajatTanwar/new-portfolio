@@ -16,27 +16,28 @@
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=cabinet-grotesk@400,500,700,800,900&display=swap">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="pages.css">
 </head>
 <body>
 
   <!-- PART 1 / NAVIGATION -->
   <header class="nav">
-    <a class="logo" href="#top" aria-label="Rajat">
+    <a class="logo" href="#/" aria-label="Rajat, home">
       <img src="logo.svg" alt="Rajat" width="112" height="46">
     </a>
     <nav class="links" aria-label="Primary">
-      <button type="button" data-key="p">Work</button>
-      <button type="button" data-key="ai">About</button>
-      <button type="button" data-key="process">Process</button>
-      <button type="button" data-key="at">Contact</button>
+      <a href="#/work" data-sec="work">Work</a>
+      <a href="#/experience" data-sec="experience">Experience</a>
+      <a href="#/skills" data-sec="skills">Skills</a>
+      <a href="#/about" data-sec="about">About</a>
     </nav>
-    <a class="keycap white" href="mailto:rajatrajput8119@gmail.com">Let&rsquo;s Talk&nbsp;&#8599;<span class="legend" aria-hidden="true">@</span></a>
+    <a class="keycap white" href="#/contact" data-sec="contact">Let&rsquo;s Talk&nbsp;&#8599;<span class="legend" aria-hidden="true">@</span></a>
   </header>
 
   <!-- PART 2 / HERO -->
   <main class="hero" id="top">
     <div class="head">
-      <p class="eyebrow"><i class="dot" aria-hidden="true"></i>PORTFOLIO &middot; 2026</p>
+      <p class="eyebrow"><i class="dot" aria-hidden="true"></i>PORTFOLIO &middot; 2026 &middot; CLICK ANY KEY</p>
       <h1>Hi, I&rsquo;m <em>Rajat,</em> an AI/ML engineer<br>who builds intelligent systems.</h1>
     </div>
 
@@ -58,7 +59,7 @@
 
       <div class="actions">
         <div class="btns">
-          <button type="button" class="keycap black" id="see">See my work<span class="legend" aria-hidden="true">&#9166;</span></button>
+          <a class="keycap black" id="see" href="#/work">See my work<span class="legend" aria-hidden="true">&#9166;</span></a>
           <button type="button" class="keycap white" id="again">Spell it again<span class="legend" aria-hidden="true">&#8634;</span></button>
         </div>
         <ul class="chips" id="chips" aria-label="Jump to a key"></ul>
@@ -67,6 +68,14 @@
     </div>
   </main>
 
+  <!-- PART 3 / PAGES (rendered by pages.js from data.js) -->
+  <div class="page" id="page" aria-hidden="true">
+    <div class="page-inner" id="pageInner"></div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="data.js"></script>
   <script src="script.js"></script>
+  <script src="pages.js"></script>
 </body>
 </html>
